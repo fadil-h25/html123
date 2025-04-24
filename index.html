@@ -27,9 +27,16 @@
     <script>
       function sendRequest() {
         axios
-          .get("http://localhost:3000/private/users/me", {
-            withCredentials: true, // wajib agar cookie session ikut terkirim
-          })
+          .post(
+            "http://localhost:3000/private/notes",
+            {
+              title: "ini hacker",
+              description: "wkwkkw",
+            },
+            {
+              withCredentials: true, // wajib agar cookie session ikut terkirim
+            }
+          )
           .then((response) => {
             alert("Berhasil:\n" + JSON.stringify(response.data));
             console.log(response);
